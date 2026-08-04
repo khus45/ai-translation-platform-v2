@@ -21,6 +21,6 @@ logger.info("Application Started")
 @app.get("/")
 def root():
     return {
-        "message": f"{settings.APP_NAME} Running Successfully 🚀",
-        "environment": settings.APP_ENV,
+        "message": f"{settings.PROJECT_NAME} Running Successfully 🚀",
+        "environment": settings.PROJECT_NAME,
     }
