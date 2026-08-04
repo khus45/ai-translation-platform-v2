@@ -1,12 +1,26 @@
 from fastapi import FastAPI
 
+from app.api.health import router as health_router
+from app.config.constants import PROJECT_NAME
+from app.config.logging import logger
+from app.config.settings import settings
+
 app = FastAPI(
-    title="AI Translation Platform",
+    title=PROJECT_NAME,
     version="1.0.0",
-    description="Enterprise AI Translation Platform API",
 )
+app.include_router(
+    health_router,
+    prefix="/api/v1",
+    tags=["Health"],
+)
+
+logger.info("Application Started")
 
 
 @app.get("/")
 def root():
-    return {"message": "AI Translation Platform API is running 🚀"}
+    return {
+        "message": f"{settings.APP_NAME} Running Successfully 🚀",
+        "environment": settings.APP_ENV,
+    }
