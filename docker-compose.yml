@@ -1,0 +1,19 @@
+services:
+
+  backend:
+
+    build:
+      context: ./backend
+
+    container_name: ai_translation_backend
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - ./backend:/app
+
+    env_file:
+      - ./backend/.env
+
+    restart: unless-stopped
