@@ -1,2 +1,2 @@
 # ai-translation-platform-v2
-Enterprise AI Translation QA Platform using RAG, LLMs and Human Feedback
+Enterprise-grade AI Translation & Quality Assurance Platform powered by RAG, LLMs, AI Agents, and Human-in-the-Loop Feedback.
