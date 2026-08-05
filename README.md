@@ -5,31 +5,30 @@ Enterprise-grade AI Translation & Quality Assurance Platform powered by RAG, LLM
 
 ### 2026-08-05 — Added authentication & user management
 - Summary: Implemented user registration, login, refresh/logout, JWT access/refresh tokens, password hashing, role-based access control, and user listing APIs.
+- Commit: https://github.com/khus45/ai-translation-platform-v2/commit/dfb4d7261fa89340ab28277e4e9350cc79677c23
 - Files changed (highlights):
-  - backend/app/api/auth.py (new)
-  - backend/app/api/users.py (new)
-  - backend/app/services/auth_service.py (new)
-  - backend/app/services/user_service.py (new)
-  - backend/app/services/token_service.py (new)
-  - backend/app/security/jwt.py (new)
-  - backend/app/security/hashing.py (new)
-  - backend/app/repositories/user_repository.py (new)
-  - backend/app/dependencies/auth.py (new)
-  - backend/app/models/user.py (updated)
-  - backend/app/config/settings.py (updated)
-  - backend/.env.example (updated)
-  - backend/migrations/versions/9c1a2b3d4e5f_add_auth_fields_to_users.py (new)
-  - backend/tests/test_auth_flow.py (new)
-  - backend/requirements.txt (updated)
+  - https://github.com/khus45/ai-translation-platform-v2/blob/main/backend/app/api/auth.py
+  - https://github.com/khus45/ai-translation-platform-v2/blob/main/backend/app/api/users.py
+  - https://github.com/khus45/ai-translation-platform-v2/blob/main/backend/app/services/auth_service.py
+  - https://github.com/khus45/ai-translation-platform-v2/blob/main/backend/app/services/user_service.py
+  - https://github.com/khus45/ai-translation-platform-v2/blob/main/backend/app/services/token_service.py
+  - https://github.com/khus45/ai-translation-platform-v2/blob/main/backend/app/security/jwt.py
+  - https://github.com/khus45/ai-translation-platform-v2/blob/main/backend/app/security/hashing.py
+  - https://github.com/khus45/ai-translation-platform-v2/blob/main/backend/app/repositories/user_repository.py
+  - https://github.com/khus45/ai-translation-platform-v2/blob/main/backend/app/dependencies/auth.py
+  - https://github.com/khus45/ai-translation-platform-v2/blob/main/backend/app/models/user.py
+  - https://github.com/khus45/ai-translation-platform-v2/blob/main/backend/.env.example
+  - https://github.com/khus45/ai-translation-platform-v2/blob/main/backend/migrations/versions/9c1a2b3d4e5f_add_auth_fields_to_users.py
+  - https://github.com/khus45/ai-translation-platform-v2/blob/main/backend/tests/test_auth_flow.py
+  - https://github.com/khus45/ai-translation-platform-v2/blob/main/backend/requirements.txt
 - Tests: Added unit/integration tests at `backend/tests/test_auth_flow.py` covering register/login/refresh/me and admin role checks.
-- DB / Migrations: Added Alembic migration to add `role` and `refresh_token_hash` columns to `users` (see backend/migrations/versions/9c1a2b3d4e5f_add_auth_fields_to_users.py).
+- DB / Migrations: Added Alembic migration to add `role` and `refresh_token_hash` columns to `users`.
 
 How to verify:
 1. Ensure environment variables are set (see `backend/.env.example`) — SECRET_KEY and token settings were added.
-2. Run services: `docker-compose up --build` or run the backend directly:
+2. Start services: `docker-compose up --build` or run the backend directly:
    ```bash
    cd backend
-   # optional: create venv and install deps
    pip install -r requirements.txt
    alembic -c alembic.ini upgrade head
    uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
@@ -45,6 +44,6 @@ How to verify:
    ```
 
 Notes / follow-ups:
-- Add CI secrets for any external AI providers (OPENAI_API_KEY, GEMINI_API_KEY) if tests or services require them.
-- Consider rotating secrets and storing refresh tokens securely in production.
-- Add integration tests for the full Docker Compose setup.
+- Add CI secrets for external providers (OPENAI_API_KEY, GEMINI_API_KEY) if services/tests require them.
+- Securely manage SECRET_KEY and rotate refresh tokens in production.
+- Consider adding integration tests for the full Docker Compose stack.
