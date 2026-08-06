@@ -1,48 +1,7 @@
-from collections.abc import Generator
-from os import environ
-
-environ.setdefault("DATABASE_URL", "sqlite://")
-
-from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
-from sqlalchemy.orm import Session, sessionmaker
-from sqlalchemy.pool import StaticPool
-
-from app.db.base import Base
-from app.db.session import get_db
-from app.main import app
 from app.models import User
 
-engine = create_engine(
-    "sqlite://",
-    connect_args={"check_same_thread": False},
-    poolclass=StaticPool,
-)
-TestingSessionLocal = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    bind=engine,
-)
 
-
-def override_get_db() -> Generator[Session, None, None]:
-    db = TestingSessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-app.dependency_overrides[get_db] = override_get_db
-client = TestClient(app)
-
-
-def setup_function() -> None:
-    Base.metadata.drop_all(bind=engine)
-    Base.metadata.create_all(bind=engine)
-
-
-def test_register_login_refresh_and_me_flow() -> None:
+def test_register_login_refresh_and_me_flow(client) -> None:
     register_response = client.post(
         "/api/v1/auth/register",
         json={
@@ -79,7 +38,7 @@ def test_register_login_refresh_and_me_flow() -> None:
     assert refresh_response.json()["access_token"]
 
 
-def test_duplicate_registration_is_rejected() -> None:
+def test_duplicate_registration_is_rejected(client) -> None:
     payload = {
         "username": "khushi",
         "email": "khushi@example.com",
@@ -92,7 +51,7 @@ def test_duplicate_registration_is_rejected() -> None:
     assert response.status_code == 409
 
 
-def test_admin_route_requires_admin_role() -> None:
+def test_admin_route_requires_admin_role(client, testing_session) -> None:
     register_response = client.post(
         "/api/v1/auth/register",
         json={
@@ -109,7 +68,7 @@ def test_admin_route_requires_admin_role() -> None:
     )
     assert forbidden_response.status_code == 403
 
-    with TestingSessionLocal() as db:
+    with testing_session() as db:
         user = db.query(User).filter(User.email == "khushi@example.com").one()
         user.role = "admin"
         db.commit()

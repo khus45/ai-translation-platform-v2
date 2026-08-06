@@ -1,5 +1,6 @@
 from functools import lru_cache
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -12,6 +13,12 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
+    OPENAI_API_KEY: str | None = None
+    GEMINI_API_KEY: str | None = None
+    DEFAULT_TRANSLATION_PROVIDER: str = "openai"
+    OPENAI_TRANSLATION_MODEL: str = "gpt-4o-mini"
+    GEMINI_TRANSLATION_MODEL: str = "gemini-1.5-flash"
+    TRANSLATION_MAX_RETRIES: int = Field(default=2, ge=0, le=5)
 
     model_config = SettingsConfigDict(
         env_file=".env",
