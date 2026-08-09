@@ -1,139 +1,796 @@
-# AI Translation Platform v2
+# 🚀 AI Translation Platform v2
 
-Enterprise-grade AI Translation & Quality Assurance Platform powered by Retrieval-Augmented Generation (RAG), LLMs, AI agents, and human-in-the-loop feedback.
+> **Enterprise-grade AI Translation & Quality Assurance Platform powered by RAG, LLMs, AI Agents, and Human-in-the-Loop workflows.**
 
-This repository contains the backend and supporting components for a production-ready platform that combines automated translation, context-aware QA, and human review workflows to deliver high-quality localized content at scale.
+AI Translation Platform v2 is a production-oriented platform designed to deliver **context-aware, reliable, and continuously improving multilingual translation**.
 
----
-
-## Key Features
-
-- RAG-enabled retrieval for context-aware translation and QA
-- Integration with modern LLMs and AI agents for translation and validation
-- Human-in-the-loop feedback to continuously improve model outputs
-- Role-based authentication and secure token management
-- Test coverage for critical flows (authentication, user management)
-- Database migrations using Alembic for reproducible schema changes
+The platform combines **Retrieval-Augmented Generation (RAG)**, modern **Large Language Models (LLMs)**, **AI agents**, automated quality validation, and **human feedback loops** to improve translation accuracy and consistency at scale.
 
 ---
 
-## What's new
+## ✨ Key Features
 
-### 2026-08-05 — Authentication & User Management
-A secure, production-ready authentication and user management system was added to the backend. Highlights:
+### 🤖 AI-Powered Translation
 
-- User registration, login, and profile endpoints with input validation and hashed passwords
-- Short-lived JWT access tokens and refresh tokens with rotation and refresh token hashing
-- Role-based access control (roles: `user`, `admin`) for protected endpoints
-- Endpoints: `register`, `login`, `refresh`, `logout`, `users/me`, and admin user listing
-- Unit and integration tests for the auth flow: `backend/tests/test_auth_flow.py`
-- Alembic migration to add `role` and `refresh_token_hash` to the users table
+* Context-aware translation using LLMs
+* RAG-powered retrieval of relevant translation context
+* Support for modern AI model providers
+* Extensible architecture for adding new translation models
 
-Commit: https://github.com/khus45/ai-translation-platform-v2/commit/dfb4d7261fa89340ab28277e4e9350cc79677c23
+### 🔎 Translation Quality Assurance
 
-Files changed (highlights):
-- backend/app/api/auth.py
-- backend/app/api/users.py
-- backend/app/services/auth_service.py
-- backend/app/services/user_service.py
-- backend/app/services/token_service.py
-- backend/app/security/jwt.py
-- backend/app/security/hashing.py
-- backend/app/repositories/user_repository.py
-- backend/app/dependencies/auth.py
-- backend/app/models/user.py
-- backend/.env.example
-- backend/migrations/versions/9c1a2b3d4e5f_add_auth_fields_to_users.py
-- backend/tests/test_auth_flow.py
-- backend/requirements.txt
+* Automated translation validation
+* Context-aware quality checks
+* AI-assisted error detection
+* Support for consistency and terminology validation
+* Designed for multilingual content workflows
+
+### 🧠 Retrieval-Augmented Generation
+
+The platform uses RAG to provide relevant contextual information to the translation and QA pipelines.
+
+```text
+User Content
+     │
+     ▼
+Document Processing
+     │
+     ▼
+Chunking & Embeddings
+     │
+     ▼
+Vector Database
+     │
+     ▼
+Relevant Context Retrieval
+     │
+     ▼
+LLM / AI Agent
+     │
+     ▼
+Translation + QA
+```
+
+### 👤 Human-in-the-Loop
+
+AI-generated translations can be reviewed and corrected by human reviewers.
+
+Feedback can be used to:
+
+* Identify translation errors
+* Improve terminology consistency
+* Validate AI-generated outputs
+* Build better translation context
+* Create a continuous improvement loop
+
+### 🔐 Production-Ready Authentication
+
+The backend includes a secure authentication and user-management system with:
+
+* User registration
+* User login
+* Password hashing
+* JWT authentication
+* Short-lived access tokens
+* Refresh tokens
+* Refresh token rotation
+* Refresh token hashing
+* Logout functionality
+* Role-based access control
+* Protected API endpoints
+* User profile management
+* Admin-only user management
+
+Supported roles:
+
+```text
+user
+admin
+```
+
+### 🧪 Automated Testing
+
+Critical authentication and user-management flows are covered through:
+
+* Unit tests
+* Integration tests
+* Authentication flow tests
+* Protected endpoint tests
+* Role-based access tests
 
 ---
 
-## Quickstart (local development)
+# 🏗️ System Architecture
 
-Prerequisites:
-- Python 3.10+ (or the version pinned in `backend/requirements.txt`)
-- PostgreSQL (or the DB configured in your `.env`)
-- Optional: Docker & Docker Compose for an isolated setup
+The platform follows a modular architecture designed to support future AI services, background workers, databases, and external model providers.
 
-1. Copy the example env and update values:
+```text
+                         ┌─────────────────────┐
+                         │      Frontend       │
+                         │   Web Application   │
+                         └──────────┬──────────┘
+                                    │
+                                    ▼
+                         ┌─────────────────────┐
+                         │      FastAPI        │
+                         │       Backend       │
+                         └──────────┬──────────┘
+                                    │
+              ┌─────────────────────┼─────────────────────┐
+              │                     │                     │
+              ▼                     ▼                     ▼
+       ┌─────────────┐       ┌─────────────┐       ┌─────────────┐
+       │ Auth & RBAC │       │ Translation │       │     QA      │
+       │   Service   │       │   Service   │       │   Service   │
+       └─────────────┘       └──────┬──────┘       └──────┬──────┘
+                                    │                     │
+                                    └──────────┬──────────┘
+                                               ▼
+                                    ┌─────────────────────┐
+                                    │    RAG Pipeline     │
+                                    └──────────┬──────────┘
+                                               │
+                                    ┌──────────▼──────────┐
+                                    │ Vector Retrieval    │
+                                    │ + Embeddings        │
+                                    └──────────┬──────────┘
+                                               │
+                                               ▼
+                                    ┌─────────────────────┐
+                                    │    LLM / AI Agent   │
+                                    └──────────┬──────────┘
+                                               │
+                                               ▼
+                                    ┌─────────────────────┐
+                                    │ Human Review &      │
+                                    │ Feedback Loop       │
+                                    └─────────────────────┘
+```
+
+---
+
+# 🛠️ Technology Stack
+
+| Layer                | Technology       |
+| -------------------- | ---------------- |
+| Backend              | FastAPI          |
+| Language             | Python           |
+| Database             | PostgreSQL       |
+| ORM / Database Layer | SQLAlchemy       |
+| Migrations           | Alembic          |
+| Authentication       | JWT              |
+| Password Security    | Password Hashing |
+| AI / LLM             | OpenAI / Gemini  |
+| AI Architecture      | RAG + AI Agents  |
+| Vector Search        | Vector Database  |
+| Testing              | Pytest           |
+| Containerization     | Docker           |
+| API Server           | Uvicorn          |
+| Version Control      | Git + GitHub     |
+
+---
+
+# 📁 Project Structure
+
+```text
+ai-translation-platform-v2/
+│
+├── backend/
+│   │
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── auth.py
+│   │   │   └── users.py
+│   │   │
+│   │   ├── dependencies/
+│   │   │   └── auth.py
+│   │   │
+│   │   ├── models/
+│   │   │   └── user.py
+│   │   │
+│   │   ├── repositories/
+│   │   │   └── user_repository.py
+│   │   │
+│   │   ├── security/
+│   │   │   ├── hashing.py
+│   │   │   └── jwt.py
+│   │   │
+│   │   ├── services/
+│   │   │   ├── auth_service.py
+│   │   │   ├── token_service.py
+│   │   │   └── user_service.py
+│   │   │
+│   │   └── main.py
+│   │
+│   ├── migrations/
+│   │   └── versions/
+│   │
+│   ├── tests/
+│   │   └── test_auth_flow.py
+│   │
+│   ├── .env.example
+│   ├── alembic.ini
+│   └── requirements.txt
+│
+├── ai-services/
+├── docs/
+├── frontend/
+├── scripts/
+├── tests/
+│
+├── CONTRIBUTING.md
+├── LICENSE
+└── README.md
+```
+
+---
+
+# 🔐 Authentication & Authorization
+
+The platform uses **JWT-based authentication** with access and refresh tokens.
+
+### Authentication Flow
+
+```text
+             ┌──────────────┐
+             │    Client    │
+             └──────┬───────┘
+                    │
+                    ▼
+            ┌───────────────┐
+            │    Login      │
+            └───────┬───────┘
+                    │
+                    ▼
+            ┌───────────────┐
+            │ Validate User │
+            └───────┬───────┘
+                    │
+                    ▼
+          ┌────────────────────┐
+          │ Access + Refresh   │
+          │      Tokens        │
+          └─────────┬──────────┘
+                    │
+                    ▼
+          ┌────────────────────┐
+          │ Protected API      │
+          │      Requests      │
+          └─────────┬──────────┘
+                    │
+                    ▼
+             ┌─────────────┐
+             │ RBAC Check  │
+             └──────┬──────┘
+                    │
+                    ▼
+             ┌─────────────┐
+             │ API Access  │
+             └─────────────┘
+```
+
+### Security Highlights
+
+* Passwords are never stored in plain text
+* Passwords are securely hashed
+* Access tokens are short-lived
+* Refresh tokens support token rotation
+* Refresh token hashes are stored securely
+* Protected routes require authentication
+* Admin endpoints require appropriate roles
+* Sensitive configuration is provided through environment variables
+
+---
+
+# 📡 API Endpoints
+
+## Authentication
+
+| Method | Endpoint                | Description          | Authentication |
+| ------ | ----------------------- | -------------------- | -------------- |
+| `POST` | `/api/v1/auth/register` | Register a new user  | Public         |
+| `POST` | `/api/v1/auth/login`    | Authenticate user    | Public         |
+| `POST` | `/api/v1/auth/refresh`  | Refresh access token | Refresh Token  |
+| `POST` | `/api/v1/auth/logout`   | Logout user          | Authenticated  |
+
+## User Management
+
+| Method | Endpoint           | Description      | Authentication |
+| ------ | ------------------ | ---------------- | -------------- |
+| `GET`  | `/api/v1/users/me` | Get current user | User           |
+| `GET`  | `/api/v1/users`    | List users       | Admin          |
+
+---
+
+# 🚀 Getting Started
+
+## Prerequisites
+
+Make sure the following are installed:
+
+* Python 3.10+
+* PostgreSQL
+* Git
+* pip
+
+Optional:
+
+* Docker
+* Docker Compose
+
+---
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/khus45/ai-translation-platform-v2.git
+
+cd ai-translation-platform-v2
+```
+
+---
+
+## 2. Configure Environment Variables
+
+Copy the example environment file:
 
 ```bash
 cp backend/.env.example backend/.env
-# Edit backend/.env and set SECRET_KEY, DATABASE_URL, and any provider keys (OPENAI_API_KEY, GEMINI_API_KEY) as needed
 ```
 
-2. Install dependencies and prepare the database:
+Update the values inside:
+
+```env
+SECRET_KEY=your-secret-key
+DATABASE_URL=your-database-url
+
+OPENAI_API_KEY=your-openai-key
+GEMINI_API_KEY=your-gemini-key
+```
+
+> **Important:** Never commit `.env` or API keys to GitHub.
+
+---
+
+## 3. Create a Virtual Environment
 
 ```bash
 cd backend
+
+python3 -m venv venv
+```
+
+Activate it:
+
+### macOS / Linux
+
+```bash
+source venv/bin/activate
+```
+
+### Windows
+
+```bash
+venv\Scripts\activate
+```
+
+---
+
+## 4. Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
+
+---
+
+## 5. Run Database Migrations
+
+Apply all Alembic migrations:
+
+```bash
 alembic -c alembic.ini upgrade head
 ```
 
-3. Run the backend server:
+This creates/updates the database schema required by the application.
+
+---
+
+# ▶️ Running the Backend
+
+Start the FastAPI development server:
 
 ```bash
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-4. Try the basic auth workflow (example):
+The API will be available at:
 
-- Register: POST /api/v1/auth/register { "username": "alice", "email": "alice@example.com", "password": "StrongPass123" }
-- Login: POST /api/v1/auth/login -> returns access_token and refresh_token
-- Get current user: GET /api/v1/users/me with `Authorization: Bearer <access_token>`
-- Refresh: POST /api/v1/auth/refresh { "refresh_token": "<refresh_token>" }
+```text
+http://localhost:8000
+```
+
+### Interactive API Documentation
+
+FastAPI automatically provides Swagger documentation at:
+
+```text
+http://localhost:8000/docs
+```
+
+ReDoc is available at:
+
+```text
+http://localhost:8000/redoc
+```
 
 ---
 
-## Running tests
+# 🧪 Testing
 
-Run the unit/integration tests for the backend:
+Run the complete backend test suite:
 
 ```bash
 pytest backend/tests -q
 ```
 
-To run the auth flow tests specifically:
+Run authentication tests specifically:
 
 ```bash
 pytest backend/tests/test_auth_flow.py -q
 ```
 
----
-
-## Deployment notes
-
-- Ensure `SECRET_KEY` and other sensitive environment variables are provided securely (CI secrets, vault, or environment store).
-- For production, consider additional strategies for refresh token rotation, revocation, or blacklisting.
-- Add provider API keys (OPENAI_API_KEY, GEMINI_API_KEY) to CI/CD secrets if your integration tests or services rely on them.
-- Use Docker Compose or Kubernetes for multi-service deployments (DB, backend, optional worker services and queues).
+For development, it is recommended to run tests before creating a pull request.
 
 ---
 
-## Contributing
+# 🔄 Example Authentication Workflow
 
-Contributions are welcome. Please follow these guidelines:
+## 1. Register
 
-1. Open an issue to discuss significant changes or feature requests.
-2. Create small, focused pull requests with clear descriptions and tests for new behavior.
-3. Run existing tests and add tests for any new functionality.
-4. Keep secrets out of commits; use `backend/.env.example` for configuration examples.
+```http
+POST /api/v1/auth/register
+```
+
+Request:
+
+```json
+{
+  "username": "alice",
+  "email": "alice@example.com",
+  "password": "StrongPass123"
+}
+```
+
+---
+
+## 2. Login
+
+```http
+POST /api/v1/auth/login
+```
+
+The API returns:
+
+```json
+{
+  "access_token": "<access_token>",
+  "refresh_token": "<refresh_token>",
+  "token_type": "bearer"
+}
+```
 
 ---
 
-## Project structure (high level)
+## 3. Access Protected Endpoint
 
-- backend/ — FastAPI backend, services, API endpoints, and tests
-- backend/migrations/ — Alembic migrations
+```http
+GET /api/v1/users/me
+Authorization: Bearer <access_token>
+```
+
+---
+
+## 4. Refresh Token
+
+```http
+POST /api/v1/auth/refresh
+```
+
+Request:
+
+```json
+{
+  "refresh_token": "<refresh_token>"
+}
+```
 
 ---
 
-## License
+## 5. Logout
 
-This project does not specify a license in the repository. If this is intended to be open-source, add a LICENSE file (e.g., MIT, Apache-2.0) and update this README.
+```http
+POST /api/v1/auth/logout
+```
+
+The refresh-token lifecycle is invalidated according to the authentication service implementation.
 
 ---
+
+# 🗄️ Database Migrations
+
+The project uses **Alembic** for version-controlled database schema changes.
+
+Create a migration:
+
+```bash
+alembic revision --autogenerate -m "description"
+```
+
+Apply migrations:
+
+```bash
+alembic upgrade head
+```
+
+Rollback the latest migration:
+
+```bash
+alembic downgrade -1
+```
+
+This ensures database changes remain reproducible across development, testing, and production environments.
+
+---
+
+# 🐳 Docker
+
+Docker Compose can be used to run the platform's infrastructure in an isolated environment.
+
+Start services:
+
+```bash
+docker compose up --build
+```
+
+Run in detached mode:
+
+```bash
+docker compose up -d
+```
+
+Check running containers:
+
+```bash
+docker compose ps
+```
+
+Stop services:
+
+```bash
+docker compose down
+```
+
+---
+
+# ☁️ Deployment
+
+The platform is designed with production deployment in mind.
+
+Recommended production components:
+
+```text
+                    ┌───────────────┐
+                    │ Load Balancer │
+                    └───────┬───────┘
+                            │
+              ┌─────────────┴─────────────┐
+              │                           │
+       ┌──────▼──────┐             ┌──────▼──────┐
+       │  FastAPI    │             │  FastAPI    │
+       │  Instance 1 │             │  Instance 2 │
+       └──────┬──────┘             └──────┬──────┘
+              │                           │
+              └─────────────┬─────────────┘
+                            │
+                     ┌──────▼──────┐
+                     │ PostgreSQL  │
+                     └─────────────┘
+```
+
+Production secrets should be managed through:
+
+* CI/CD secret stores
+* Cloud secret managers
+* Vault solutions
+* Environment-specific secret management
+
+Never store production credentials directly in source code.
+
+---
+
+# 🔒 Production Security Checklist
+
+Before production deployment, ensure:
+
+* [ ] Strong `SECRET_KEY`
+* [ ] HTTPS enabled
+* [ ] Secure database credentials
+* [ ] `.env` excluded from Git
+* [ ] API keys stored in secret management
+* [ ] Proper CORS configuration
+* [ ] Rate limiting
+* [ ] Token expiration configured
+* [ ] Refresh-token revocation strategy
+* [ ] Database backups
+* [ ] Application logging
+* [ ] Error monitoring
+* [ ] Dependency vulnerability scanning
+
+---
+
+# 🗺️ Roadmap
+
+The platform is being developed incrementally toward a complete AI-powered localization system.
+
+### Phase 1 — Core Backend & Authentication
+
+* [x] FastAPI backend
+* [x] PostgreSQL integration
+* [x] User registration
+* [x] Login
+* [x] JWT authentication
+* [x] Refresh token rotation
+* [x] Role-based authorization
+* [x] User profile
+* [x] Admin user management
+* [x] Authentication tests
+* [x] Alembic migrations
+
+### Phase 2 — Translation Engine
+
+* [ ] Translation service abstraction
+* [ ] LLM-based translation
+* [ ] Multi-language support
+* [ ] Translation request management
+* [ ] Translation history
+* [ ] Provider fallback mechanism
+
+### Phase 3 — RAG Pipeline
+
+* [ ] Document ingestion
+* [ ] Text chunking
+* [ ] Embedding generation
+* [ ] Vector storage
+* [ ] Semantic retrieval
+* [ ] Context-aware translation
+* [ ] Terminology retrieval
+
+### Phase 4 — AI Quality Assurance
+
+* [ ] Automated translation scoring
+* [ ] Grammar validation
+* [ ] Terminology consistency
+* [ ] Context validation
+* [ ] Hallucination detection
+* [ ] AI-generated QA reports
+
+### Phase 5 — AI Agents
+
+* [ ] Translation agent
+* [ ] QA agent
+* [ ] Terminology agent
+* [ ] Reviewer agent
+* [ ] Multi-agent orchestration
+
+### Phase 6 — Human Review
+
+* [ ] Reviewer dashboard
+* [ ] Translation correction workflow
+* [ ] Approval/rejection workflow
+* [ ] Feedback collection
+* [ ] Feedback-driven improvements
+
+### Phase 7 — Production & Observability
+
+* [ ] Background workers
+* [ ] Task queues
+* [ ] Redis integration
+* [ ] Monitoring
+* [ ] Logging
+* [ ] Metrics
+* [ ] CI/CD
+* [ ] Cloud deployment
+* [ ] Kubernetes support
+
+---
+
+# 📈 Engineering Goals
+
+The long-term goal is to evolve this project into a scalable localization platform capable of supporting:
+
+* High-volume translation workloads
+* Multiple LLM providers
+* Enterprise terminology management
+* Context-aware translation
+* Automated quality assurance
+* Human review workflows
+* Continuous feedback loops
+* Multi-tenant organizations
+* Production observability
+* Scalable asynchronous processing
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome.
+
+Before making a significant change:
+
+1. Open an issue describing the proposed change.
+2. Create a focused feature branch.
+3. Implement the change with appropriate tests.
+4. Run the existing test suite.
+5. Create a pull request with a clear description.
+
+Example:
+
+```bash
+git checkout -b feature/translation-engine
+
+git add .
+
+git commit -m "Add translation engine"
+
+git push origin feature/translation-engine
+```
+
+---
+
+# 📝 Development Guidelines
+
+Please follow these principles:
+
+* Keep modules small and focused
+* Follow clean architecture principles
+* Write tests for new functionality
+* Keep secrets out of source control
+* Use meaningful commit messages
+* Keep API contracts backward compatible where possible
+* Document significant architectural decisions
+
+---
+
+# 📄 License
+
+This project currently does not specify an open-source license.
+
+If the repository is intended to be open-source, consider adding a license such as:
+
+* MIT
+* Apache License 2.0
+
+---
+
+# 👩‍💻 Author
+
+**Khushi Sinha**
+
+Software Engineer | AI & Data Enthusiast
+
+GitHub:
+https://github.com/khus45
+
+---
+
+# ⭐ Project Status
+
+**Status:** 🚧 Active Development
+
+The authentication and user-management foundation is currently implemented. The upcoming development focuses on the translation engine, RAG pipeline, AI-powered quality assurance, agent orchestration, and human-in-the-loop workflows.
+
+If you find this project useful, consider giving it a ⭐ on GitHub.
 
 If you’d like, I can also:
 - Add a minimal `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md` template
