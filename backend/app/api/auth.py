@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
@@ -47,3 +47,25 @@ def logout(
 ) -> Response:
     AuthService(db).logout(current_user)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.get("/oauth/google")
+def google_oauth_placeholder():
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED,
+        detail=(
+            "Google OAuth connector placeholder. "
+            "Configure OAuth client secrets before production use."
+        ),
+    )
+
+
+@router.get("/oauth/microsoft")
+def microsoft_oauth_placeholder():
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED,
+        detail=(
+            "Microsoft OAuth connector placeholder. "
+            "Configure OAuth client secrets before production use."
+        ),
+    )

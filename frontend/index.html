@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enterprise AI Translation Intelligence Platform</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>Enterprise AI Translation Intelligence Platform</h1>
+        <p>Translation, RAG context, QA agents, human review, and analytics.</p>
+      </div>
+      <div class="status" id="status">Disconnected</div>
+    </header>
+
+    <main class="layout">
+      <section class="panel auth-panel">
+        <h2>Session</h2>
+        <div class="grid two">
+          <label>Username <input id="username" value="demo-user" /></label>
+          <label>Email <input id="email" value="demo@example.com" /></label>
+          <label>Password <input id="password" type="password" value="strong-password" /></label>
+          <label>API Base <input id="apiBase" value="http://127.0.0.1:8000/api/v1" /></label>
+        </div>
+        <div class="actions">
+          <button id="registerBtn">Register</button>
+          <button id="loginBtn">Login</button>
+          <button id="healthBtn">Health</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Translate</h2>
+        <div class="grid two">
+          <label>Source Text <textarea id="sourceText">The payment has been processed successfully.</textarea></label>
+          <label>Translation Output <textarea id="translatedText" readonly></textarea></label>
+          <label>Target Language <input id="targetLanguage" value="hi" /></label>
+          <label>Provider
+            <select id="provider">
+              <option value="local">local</option>
+              <option value="auto">auto</option>
+              <option value="openai">openai</option>
+              <option value="gemini">gemini</option>
+            </select>
+          </label>
+        </div>
+        <div class="actions">
+          <button id="translateBtn">Translate</button>
+          <button id="qaBtn">Run QA</button>
+          <button id="feedbackBtn">Approve</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Glossary & Documents</h2>
+        <div class="grid two">
+          <label>Glossary Term <input id="glossaryTerm" value="payment" /></label>
+          <label>Approved Translation <input id="approvedTranslation" value="भुगतान" /></label>
+          <label>Domain <input id="domain" value="finance" /></label>
+          <label>Document Text <textarea id="documentText">Payment invoice for customer order</textarea></label>
+        </div>
+        <div class="actions">
+          <button id="glossaryBtn">Add Glossary</button>
+          <button id="documentBtn">Ingest Document</button>
+          <button id="analyticsBtn">Refresh Analytics</button>
+        </div>
+      </section>
+
+      <section class="panel output-panel">
+        <h2>Dashboard Output</h2>
+        <pre id="output">{}</pre>
+      </section>
+    </main>
+
+    <script src="./src/app.js"></script>
+  </body>
+</html>

@@ -29,6 +29,11 @@ class TranslationResponse(BaseModel):
     provider: str
     translation_model: str
     confidence_score: float
+    domain: str
+    prompt_version: str
+    latency_ms: int
+    token_cost: float
+    retrieved_context: list[dict]
     created_at: datetime
     updated_at: datetime
 

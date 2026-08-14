@@ -1,5 +1,19 @@
 services:
 
+  frontend:
+    build:
+      context: ./frontend
+
+    container_name: ai_translation_frontend
+
+    ports:
+      - "5173:80"
+
+    depends_on:
+      - backend
+
+    restart: unless-stopped
+
   backend:
     build:
       context: ./backend
@@ -70,6 +84,33 @@ services:
 
     restart: unless-stopped
 
+  prometheus:
+    image: prom/prometheus:latest
+
+    container_name: ai_translation_prometheus
+
+    ports:
+      - "9090:9090"
+
+    volumes:
+      - ./docker/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+
+    container_name: ai_translation_grafana
+
+    ports:
+      - "3000:3000"
+
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+    restart: unless-stopped
+
 volumes:
   postgres_data:
   qdrant_data:
+  grafana_data:

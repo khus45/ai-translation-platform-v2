@@ -1,7 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, status
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from app.api.auth import router as auth_router
 from app.api.health import router as health_router
+from app.api.intelligence import router as intelligence_router
 from app.api.translation import router as translation_router
 from app.api.users import router as users_router
 from app.config.constants import PROJECT_NAME
@@ -12,6 +15,17 @@ app = FastAPI(
     title=PROJECT_NAME,
     version="1.0.0",
 )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=(
+        ["*"]
+        if settings.CORS_ALLOW_ORIGINS == "*"
+        else settings.CORS_ALLOW_ORIGINS.split(",")
+    ),
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.include_router(
     health_router,
     prefix="/api/v1",
@@ -20,8 +34,18 @@ app.include_router(
 app.include_router(auth_router, prefix="/api/v1")
 app.include_router(users_router, prefix="/api/v1")
 app.include_router(translation_router, prefix="/api/v1")
+app.include_router(intelligence_router, prefix="/api/v1")
 
 logger.info("Application Started")
+
+
+@app.exception_handler(Exception)
+def unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+    logger.exception("Unhandled error on %s", request.url.path)
+    return JSONResponse(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        content={"detail": "Internal server error"},
+    )
 
 
 @app.get("/")

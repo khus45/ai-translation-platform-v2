@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     OPENAI_TRANSLATION_MODEL: str = "gpt-4o-mini"
     GEMINI_TRANSLATION_MODEL: str = "gemini-1.5-flash"
     TRANSLATION_MAX_RETRIES: int = Field(default=2, ge=0, le=5)
+    CORS_ALLOW_ORIGINS: str = "*"
 
     model_config = SettingsConfigDict(
         env_file=".env",

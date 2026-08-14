@@ -1,4 +1,4 @@
-from sqlalchemy import Float, ForeignKey, Integer, String, Text
+from sqlalchemy import JSON, Float, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models.base_model import BaseModel
@@ -27,3 +27,13 @@ class Translation(BaseModel):
     provider: Mapped[str] = mapped_column(String(50), default="local")
 
     confidence_score: Mapped[float] = mapped_column(Float)
+
+    domain: Mapped[str] = mapped_column(String(50), default="general", index=True)
+
+    prompt_version: Mapped[str] = mapped_column(String(50), default="translate-v1")
+
+    latency_ms: Mapped[int] = mapped_column(Integer, default=0)
+
+    token_cost: Mapped[float] = mapped_column(Float, default=0.0)
+
+    retrieved_context: Mapped[list[dict]] = mapped_column(JSON, default=list)

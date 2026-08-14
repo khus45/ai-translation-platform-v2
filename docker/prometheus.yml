@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "ai-translation-backend"
+    metrics_path: "/api/v1/health"
+    static_configs:
+      - targets: ["backend:8000"]
