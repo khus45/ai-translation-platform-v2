@@ -3,225 +3,77 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Khushi Sinha portfolio - Data Analyst and GenAI Developer building RAG, agentic AI, analytics automation, and backend platforms."
-    />
-    <title>Khushi Sinha | Data Analyst & GenAI Developer</title>
+    <title>Enterprise AI Translation Intelligence Platform</title>
     <link rel="stylesheet" href="./src/styles.css" />
   </head>
   <body>
-    <header class="site-header">
-      <a class="brand" href="#top" aria-label="Khushi Sinha home">KS</a>
-      <nav aria-label="Primary navigation">
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a href="#answers">Answers</a>
-      </nav>
-      <a class="header-action" href="./assets/khushi-sinha-resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+    <header class="topbar">
+      <div>
+        <h1>Enterprise AI Translation Intelligence Platform</h1>
+        <p>Translation, RAG context, QA agents, human review, and analytics.</p>
+      </div>
+      <div class="status" id="status">Disconnected</div>
     </header>
 
-    <main id="top">
-      <section class="hero">
-        <canvas class="hero-scene" id="heroScene" aria-hidden="true"></canvas>
-        <div class="hero-copy">
-          <p class="eyebrow">Data Analyst + GenAI Developer</p>
-          <h1>Khushi Sinha</h1>
-          <p class="hero-text">
-            I build AI workflows that turn data, documents, and business questions into
-            decisions: RAG systems, agentic analytics, text-to-SQL tools, and backend AI platforms.
-          </p>
-          <div class="hero-actions" aria-label="Profile links">
-            <a class="primary-action" href="#projects">View Projects</a>
-            <a class="secondary-action" href="./assets/khushi-sinha-resume.pdf" target="_blank" rel="noreferrer">Resume</a>
-            <a class="secondary-action" href="https://github.com/Khus45" target="_blank" rel="noreferrer">GitHub</a>
-            <a class="secondary-action" href="https://www.linkedin.com/in/khushi-sinha-2934a1219" target="_blank" rel="noreferrer">LinkedIn</a>
-          </div>
+    <main class="layout">
+      <section class="panel auth-panel">
+        <h2>Session</h2>
+        <div class="grid two">
+          <label>Username <input id="username" value="demo-user" /></label>
+          <label>Email <input id="email" value="demo@example.com" /></label>
+          <label>Password <input id="password" type="password" value="strong-password" /></label>
+          <label>API Base <input id="apiBase" value="http://127.0.0.1:8000/api/v1" /></label>
         </div>
-        <div class="hero-badges" aria-label="Portfolio strengths">
-          <span>LLM Apps</span>
-          <span>Data Storytelling</span>
-          <span>Backend Systems</span>
-          <span>RAG Workflows</span>
-        </div>
-        <figure class="hero-visual">
-          <img src="./assets/portfolio-hero.png" alt="Portfolio dashboard showing Khushi Sinha's AI workflow projects" />
-        </figure>
-      </section>
-
-      <section class="metrics" aria-label="Career highlights">
-        <article>
-          <strong>2 yrs</strong>
-          <span>Data, support operations, and GenAI project experience</span>
-        </article>
-        <article>
-          <strong>24</strong>
-          <span>Public GitHub repositories with AI and analytics work</span>
-        </article>
-        <article>
-          <strong>95%+</strong>
-          <span>SLA and data-accuracy focus in enterprise operations</span>
-        </article>
-      </section>
-
-      <section class="showcase-strip" aria-label="Core portfolio strengths">
-        <div class="showcase-track">
-          <span>RAG Systems</span>
-          <span>Agentic AI</span>
-          <span>FastAPI</span>
-          <span>Snowflake SQL</span>
-          <span>Power BI</span>
-          <span>Vector Search</span>
-          <span>Streamlit</span>
-          <span>Docker</span>
-          <span aria-hidden="true">RAG Systems</span>
-          <span aria-hidden="true">Agentic AI</span>
-          <span aria-hidden="true">FastAPI</span>
-          <span aria-hidden="true">Snowflake SQL</span>
-          <span aria-hidden="true">Power BI</span>
-          <span aria-hidden="true">Vector Search</span>
-          <span aria-hidden="true">Streamlit</span>
-          <span aria-hidden="true">Docker</span>
+        <div class="actions">
+          <button id="registerBtn">Register</button>
+          <button id="loginBtn">Login</button>
+          <button id="healthBtn">Health</button>
         </div>
       </section>
 
-      <section class="section command-section" aria-label="AI portfolio command center">
-        <div class="command-copy">
-          <p class="eyebrow">Creative Layer</p>
-          <h2>AI Portfolio Command Center</h2>
-          <p>
-            A recruiter can read this page like a product demo: business operations,
-            data analytics, AI engineering, and backend thinking connected into one story.
-          </p>
+      <section class="panel">
+        <h2>Translate</h2>
+        <div class="grid two">
+          <label>Source Text <textarea id="sourceText">The payment has been processed successfully.</textarea></label>
+          <label>Translation Output <textarea id="translatedText" readonly></textarea></label>
+          <label>Target Language <input id="targetLanguage" value="hi" /></label>
+          <label>Provider
+            <select id="provider">
+              <option value="local">local</option>
+              <option value="auto">auto</option>
+              <option value="openai">openai</option>
+              <option value="gemini">gemini</option>
+            </select>
+          </label>
         </div>
-        <div class="command-center tilt-card">
-          <div class="command-toolbar">
-            <span></span>
-            <span></span>
-            <span></span>
-            <strong>khushi.ai/profile</strong>
-          </div>
-          <div class="command-grid">
-            <article>
-              <span>Input</span>
-              <strong>Raw data, tickets, legal docs, CSVs, translation requests</strong>
-            </article>
-            <article>
-              <span>AI Layer</span>
-              <strong>RAG, agents, embeddings, OCR, LLM provider patterns</strong>
-            </article>
-            <article>
-              <span>Output</span>
-              <strong>Dashboards, answers, QA scores, SQL results, business actions</strong>
-            </article>
-          </div>
-          <div class="pipeline" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <div class="command-terminal">
-            <p><span>&gt;</span> match_role("Data Analyst + GenAI Developer")</p>
-            <p><span>&gt;</span> strengths: SQL, FastAPI, RAG, Agentic AI, Power BI</p>
-            <p><span>&gt;</span> recruiter_signal: creative_builder_with_business_context</p>
-          </div>
+        <div class="actions">
+          <button id="translateBtn">Translate</button>
+          <button id="qaBtn">Run QA</button>
+          <button id="feedbackBtn">Approve</button>
         </div>
       </section>
 
-      <section class="section two-column" id="experience">
-        <div>
-          <p class="eyebrow">Current Role</p>
-          <h2>Associate Data Analyst at Capgemini</h2>
+      <section class="panel">
+        <h2>Glossary & Documents</h2>
+        <div class="grid two">
+          <label>Glossary Term <input id="glossaryTerm" value="payment" /></label>
+          <label>Approved Translation <input id="approvedTranslation" value="भुगतान" /></label>
+          <label>Domain <input id="domain" value="finance" /></label>
+          <label>Document Text <textarea id="documentText">Payment invoice for customer order</textarea></label>
         </div>
-        <div class="experience-card tilt-card">
-          <h3>IKEA FOOD - Infor M3</h3>
-          <p>
-            I manage ERP functional operations, client goods data, documentation workflows,
-            data accuracy, and compliance-related processes. I also improve workflows using
-            H5 scripts, widget customization, and optimized Snowflake SQL for dashboard automation.
-          </p>
-          <ul class="impact-list">
-            <li>Resolved high-volume business-user queries across ERP workflows and documentation.</li>
-            <li>Reduced repetitive ERP steps through H5 scripting and widget customization.</li>
-            <li>Supported dashboard logic and reporting through Snowflake SQL queries.</li>
-            <li>Collaborated with development teams using Java Core, AngularJS, and JavaScript.</li>
-          </ul>
+        <div class="actions">
+          <button id="glossaryBtn">Add Glossary</button>
+          <button id="documentBtn">Ingest Document</button>
+          <button id="analyticsBtn">Refresh Analytics</button>
         </div>
       </section>
 
-      <section class="section timeline-section" aria-label="Career timeline">
-        <div>
-          <p class="eyebrow">Timeline</p>
-          <h2>From Enterprise Operations To Applied AI</h2>
-        </div>
-        <div class="timeline" id="timeline"></div>
-      </section>
-
-      <section class="section" id="projects">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Selected Work</p>
-            <h2>Projects Built For AI, Data, and Automation Roles</h2>
-          </div>
-          <div class="filters" id="filters" aria-label="Project filters"></div>
-        </div>
-        <div class="project-grid" id="projectGrid"></div>
-      </section>
-
-      <section class="section skills-section" id="skills">
-        <div>
-          <p class="eyebrow">Skills</p>
-          <h2>Tools I Use To Build</h2>
-        </div>
-        <div class="skill-groups" id="skillGroups"></div>
-      </section>
-
-      <section class="section proof-section" aria-label="Portfolio proof points">
-        <div>
-          <p class="eyebrow">Proof</p>
-          <h2>What This Portfolio Shows</h2>
-        </div>
-        <div class="proof-grid">
-          <article class="tilt-card">
-            <span>01</span>
-            <h3>Business Context</h3>
-            <p>ERP support, customer operations, documentation, SLA ownership, and stakeholder communication.</p>
-          </article>
-          <article class="tilt-card">
-            <span>02</span>
-            <h3>Data Execution</h3>
-            <p>SQL, Snowflake, Power BI, ETL thinking, dashboard logic, validation, and analytics workflows.</p>
-          </article>
-          <article class="tilt-card">
-            <span>03</span>
-            <h3>AI Product Building</h3>
-            <p>RAG, agents, FastAPI, vector databases, LLM provider patterns, OCR, and production-style testing.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section answer-section" id="answers">
-        <div>
-          <p class="eyebrow">Application Answers</p>
-          <h2>Recruiter-Ready Talking Points</h2>
-        </div>
-        <div class="answer-layout">
-          <div class="answer-tabs" id="answerTabs" role="tablist" aria-label="Application answers"></div>
-          <article class="answer-card" id="answerCard"></article>
-        </div>
+      <section class="panel output-panel">
+        <h2>Dashboard Output</h2>
+        <pre id="output">{}</pre>
       </section>
     </main>
 
-    <footer>
-      <span>Khushi Sinha</span>
-      <span>Bengaluru, India</span>
-      <a href="mailto:sinhakhushi765@gmail.com">sinhakhushi765@gmail.com</a>
-      <a href="tel:+916206439926">+91 6206439926</a>
-    </footer>
-
     <script src="./src/app.js"></script>
-    <script type="module" src="./src/hero3d.mjs"></script>
   </body>
 </html>
